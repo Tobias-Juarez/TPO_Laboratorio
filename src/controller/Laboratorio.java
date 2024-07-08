@@ -46,9 +46,10 @@ public class Laboratorio {
 
     public void altaPractica(String codigo, String nombre, String grupo, int demoraResultado, ArrayList<ValorNumerico> listaValoresCriticos) {
         Practica p = new Practica(codigo, nombre, grupo, demoraResultado);
-        practicas.add(p);
+        p.addValoresNumericos(listaValoresCriticos);
+        this.practicas.add(p);
         try {
-            practicasDAO.saveAll(practicas);
+            this.practicasDAO.saveAll(this.practicas);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -97,8 +98,5 @@ public class Laboratorio {
             }
         }
         return null;
-    }
-    public void altaValorCritico(String nombre, double minimo, double maximo, Practica practica) {
-        practica.addValorNumerico(nombre, minimo, maximo);
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import model.Practica;
-import model.ValorNumerico;
 
 public class TablePractica extends AbstractTableModel {
   private List<Practica> listaPracticas = new ArrayList<Practica>();

@@ -53,35 +53,40 @@ public class FrmAltaPractica extends JDialog {
   }
 
   private void asociarEventos(Laboratorio laboratorio, TablePractica tableModel, TableValorCritico tableValorCritico) {
-    crearPracticaButton.addActionListener(e -> {
-      String codigo = txtCodigo.getText();
-      String nombre = txtNombre.getText();
-      String grupo = txtGrupo.getText();
-      String demoraInput = txtDemora.getText();
-      try {
-        int demora=Integer.parseInt(demoraInput);
-        if (codigo.isEmpty() || nombre.isEmpty() || grupo.isEmpty() || demoraInput.isEmpty()) {
-          JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (laboratorio.existePractica(codigo)) {
-          JOptionPane.showMessageDialog(this, "Ya existe una practica con ese codigo", "Error", JOptionPane.ERROR_MESSAGE);
-        }else {
-          laboratorio.altaPractica(codigo, nombre, grupo, demora, listaValoresCriticos);
-          tableModel.add(codigo, nombre, grupo, demora);
-          JOptionPane.showMessageDialog(this, "Practica creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-          dispose();
-        }
-      } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "La demora debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
-      }
-    });
+    listaValoresCriticos = new ArrayList();
+
     agregarValoresButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        listaValoresCriticos = new ArrayList();
         FrmAltaValoresCriticos frame = new FrmAltaValoresCriticos(self, "Alta Valor Crítico", listaValoresCriticos, tableValorCritico);
         frame.setVisible(true);
       }
     });
+    crearPracticaButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String codigo = txtCodigo.getText();
+        String nombre = txtNombre.getText();
+        String grupo = txtGrupo.getText();
+        String demora = txtDemora.getText();
+        if (codigo.isEmpty() || nombre.isEmpty() || grupo.isEmpty() || demora.isEmpty()) {
+          JOptionPane.showMessageDialog(self, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if ( laboratorio.existePractica(codigo)) {
+          JOptionPane.showMessageDialog(self, "Ya existe una practica con ese codigo", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+          try {
+            int demoraResultado = Integer.parseInt(demora);
+            laboratorio.altaPractica(codigo, nombre, grupo, demoraResultado, listaValoresCriticos);
+            tableModel.add(codigo, nombre, grupo, demoraResultado);
+            JOptionPane.showMessageDialog(self, "Práctica añadida con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+          } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(self, "La demora debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+          }
+        }
+      }
+    });
+
   }
 
 }

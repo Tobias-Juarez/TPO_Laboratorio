@@ -34,7 +34,6 @@ public class Practica {
     public ArrayList<ValorNumerico> getValoresNumericos() {
         return valoresNumericos;
     }
-
     public ArrayList<ValorString> getValoresString() {
         return valoresString;
     }
@@ -66,9 +65,8 @@ public class Practica {
     public void setValor(TipoValor valor) {
         this.valor = valor;
     }
-    public void addValorNumerico(String nombre, double minimo, double maximo) {
-        ValorNumerico vn = new ValorNumerico(nombre, minimo, maximo);
-        valoresNumericos.add(vn);
+    public void addValoresNumericos(ArrayList<ValorNumerico> valoresNumericos) {
+        this.valoresNumericos.addAll(valoresNumericos);
     }
     @Override
     public String toString() {
