@@ -27,6 +27,7 @@ public class FrmAltaPractica extends JDialog {
   private JTable tableValoresCriticos;
   private TableValorCritico tableModel;
   private JButton agregarValoresButton;
+  private JButton medificarValoresButton;
   private FrmAltaPractica self;
   private ArrayList<ValorNumerico> listaValoresCriticos;
 

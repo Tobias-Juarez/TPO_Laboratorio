@@ -9,7 +9,7 @@ import model.Practica;
 public class TablePractica extends AbstractTableModel {
   private List<Practica> listaPracticas = new ArrayList<Practica>();
   protected String[] columnNames = new String[]{
-      "Codigo", "Nombre", "Grupo", "Demora Resultado"};
+      "Codigo", "Nombre", "Grupo", "Demora Resultado (hs)"};
   protected Class[] columnClasses = new Class[]{
       Integer.class, String.class, String.class, String.class, String.class, Integer.class};
 
