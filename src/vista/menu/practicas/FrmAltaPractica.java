@@ -35,14 +35,7 @@ public class FrmAltaPractica extends JDialog {
     super(owner, titulo);
     this.tableModel = new TableValorCritico();
     tableValoresCriticos.setModel(this.tableModel);
-    for (int i = 0; i < laboratorio.getPracticas().size(); i++) {
-      for (int j = 0; j < laboratorio.getPracticas().get(i).getValoresNumericos().size(); j++) {
-        this.tableModel.add(
-                laboratorio.getPracticas().get(i).getValoresNumericos().get(j).getNombre(),
-                laboratorio.getPracticas().get(i).getValoresNumericos().get(j).getMinimo(),
-                laboratorio.getPracticas().get(i).getValoresNumericos().get(j).getMaximo());
-      }
-    }
+
     setContentPane(pnlPrincipal);
     setModal(true);
     setSize(500, 400);
@@ -54,7 +47,6 @@ public class FrmAltaPractica extends JDialog {
 
   private void asociarEventos(Laboratorio laboratorio, TablePractica tableModel, TableValorCritico tableValorCritico) {
     listaValoresCriticos = new ArrayList();
-
     agregarValoresButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {

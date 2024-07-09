@@ -11,19 +11,21 @@ public class Laboratorio {
     private ArrayList<Practica> practicas;
     private ArrayList<Resultado> resultados;
     private ArrayList<Muestra> muestras;
-    private Laboratorio() {
+    private Laboratorio() throws Exception {
+        this.practicasDAO = new PracticasDAO();
         this.practicas = new ArrayList<>();
+        this.practicas = this.practicasDAO.getAll();
         this.resultados = new ArrayList<>();
         this.muestras = new ArrayList<>();
-        try {
-            this.practicasDAO = new PracticasDAO();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
     public static Laboratorio getInstance() {
         if (instance == null) {
-            instance = new Laboratorio();
+            try {
+                instance = new Laboratorio();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         return instance;
     }
