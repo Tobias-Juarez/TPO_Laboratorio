@@ -1,1 +1,1 @@
-[{"nombre":"ADMINISTRADOR","usuario":"admin","password":"admin","dni":0,"rol":"ADMINISTRADOR"}]
+[{"nombre":"ADMINISTRADOR","usuario":"admin","password":"admin","dni":0,"rol":"ADMINISTRADOR"},{"nombre":"user","email":"mail@mail.com","usuario":"user","password":"user","domicilio":"calle 123","dni":42777777,"fechaNacimiento":"23-04-2000","rol":"RECEPCIONISTA"}]

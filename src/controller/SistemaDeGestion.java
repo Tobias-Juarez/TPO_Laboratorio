@@ -21,10 +21,10 @@ public class SistemaDeGestion {
 
     private ArrayList<Sucursal> sucursales;
     private SistemaDeGestion() throws Exception {
-        this.usuarios = new ArrayList<>();
-        this.sucursales = new ArrayList<>();
         this.usuariosDAO = new UsuariosDAO();
         this.sucursalesDAO = new SucursalesDAO();
+        this.usuarios = getUsuarios();
+        this.sucursales = getSucursales();
     }
     public static SistemaDeGestion getInstance() {
         if (instance == null) {

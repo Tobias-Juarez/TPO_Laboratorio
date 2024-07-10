@@ -15,10 +15,8 @@ public class AtencionAlPublico {
     private PacientesDAO pacientesDAO;
     private AtencionAlPublico() throws Exception {
         this.pacientesDAO = new PacientesDAO();
-        this.pacientes = new ArrayList<>();
-        this.pacientes = this.pacientesDAO.getAll();
+        this.pacientes = getPacientes();
         this.peticiones = new ArrayList<>();
-
     }
     public static AtencionAlPublico getInstance() {
         if (instance == null) {

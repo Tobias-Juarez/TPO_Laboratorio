@@ -13,8 +13,7 @@ public class Laboratorio {
     private ArrayList<Muestra> muestras;
     private Laboratorio() throws Exception {
         this.practicasDAO = new PracticasDAO();
-        this.practicas = new ArrayList<>();
-        this.practicas = this.practicasDAO.getAll();
+        this.practicas = getPracticas();
         this.resultados = new ArrayList<>();
         this.muestras = new ArrayList<>();
 
