@@ -42,13 +42,7 @@ public class TablePaciente extends AbstractTableModel {
         };
     }
     public void add(int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
-        Paciente p = new Paciente();
-        p.setDni(dni);
-        p.setNombre(nombre);
-        p.setDomicilio(domicilio);
-        p.setMail(mail);
-        p.setSexo(sexo);
-        p.setEdad(edad);
+        Paciente p = new Paciente(dni, nombre, domicilio, mail, sexo, edad);
         listaPacientes.add(p);
         fireTableDataChanged();
     }

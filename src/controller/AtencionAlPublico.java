@@ -3,6 +3,7 @@ package controller;
 import DAO.PacientesDAO;
 import model.Paciente;
 import model.Peticion;
+import model.Practica;
 import model.Usuario;
 
 import java.util.ArrayList;
@@ -31,13 +32,7 @@ public class AtencionAlPublico {
     }
 
     public void altaPaciente(int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
-        Paciente paciente = new Paciente();
-        paciente.setDni(dni);
-        paciente.setNombre(nombre);
-        paciente.setDomicilio(domicilio);
-        paciente.setMail(mail);
-        paciente.setSexo(sexo);
-        paciente.setEdad(edad);
+        Paciente paciente = new Paciente(dni, nombre, domicilio, mail, sexo, edad);
         this.pacientes.add(paciente);
         try {
             this.pacientesDAO.saveAll(this.pacientes);
@@ -71,7 +66,7 @@ public class AtencionAlPublico {
             throw new RuntimeException(e);
         }
     }
-    public void altaPeticion(int dni,int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public void altaPeticion(int dni,int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {
                 p.altaPeticion( id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
@@ -84,7 +79,7 @@ public class AtencionAlPublico {
             }
         }
     }
-    public void modificarPeticion(int dni, int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public void modificarPeticion(int dni, int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {
                 p.modificarPeticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
@@ -148,5 +143,12 @@ public class AtencionAlPublico {
                 return;
             }
         }
+    }
+    public ArrayList<Peticion> getPeticionesDePacientes() {
+        this.peticiones.clear();
+        for (Paciente p : pacientes) {
+            this.peticiones.addAll(p.getPeticiones());
+        }
+        return this.peticiones;
     }
 }

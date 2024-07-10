@@ -2,6 +2,7 @@ package utils;
 
 
 import model.Peticion;
+import model.Practica;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -36,11 +37,11 @@ public class TablePeticion extends AbstractTableModel {
             case 2 -> listaPeticiones.get(rowIndex).getFechaCarga();
             case 3 -> listaPeticiones.get(rowIndex).getFechaEntrega();
             case 4 -> listaPeticiones.get(rowIndex).getEstado();
-            case 5 -> listaPeticiones.get(rowIndex).getPractica();
+            case 5 -> listaPeticiones.get(rowIndex).getPractica().getNombre();
             default -> null;
         };
     }
-    public void add(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public void add(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
         listaPeticiones.add(p);
         fireTableDataChanged();

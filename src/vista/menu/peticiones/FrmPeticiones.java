@@ -29,7 +29,7 @@ public class FrmPeticiones extends JDialog {
     tableModel = new TablePeticion();
     tablePeticiones.setModel(tableModel);
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    ArrayList<Integer> listaPacientes = new ArrayList<Integer>();
+    ArrayList<Integer> listaPacientes = new ArrayList<>();
     for (int i = 0; i < atencionAlPublico.getPacientes().size(); i++) {
       listaPacientes.add(atencionAlPublico.getPacientes().get(i).getDni());
     }

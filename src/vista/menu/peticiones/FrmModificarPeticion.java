@@ -3,6 +3,7 @@ package vista.menu.peticiones;
 import controller.AtencionAlPublico;
 import controller.Laboratorio;
 import model.Paciente;
+import model.Practica;
 import utils.TablePeticion;
 
 import java.awt.Window;
@@ -41,11 +42,11 @@ public class FrmModificarPeticion extends JDialog {
     setSize(500, 400);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(dni, tableModel, atencionAlPublico);
+    asociarEventos(dni, tableModel, atencionAlPublico, laboratorio);
 
   }
 
-  private void asociarEventos(int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico) {
+  private void asociarEventos(int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio) {
     ModificarPeticionButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -54,11 +55,13 @@ public class FrmModificarPeticion extends JDialog {
         String fechaCarga = txtFechaCarga.getText();
         String fechaEntrega = txtFechaEntrega.getText();
         String estado = txtEstado.getText();
-        String practica = (String) cbPracticas.getSelectedItem();
+        String practicaInput = (String) cbPracticas.getSelectedItem();
+        Practica practica = laboratorio.buscarPracticaPorNombre(practicaInput);
+
         try {
           int id = Integer.parseInt(idInput);
           Paciente p = atencionAlPublico.buscarPaciente(dni);
-          if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || practica.isEmpty()) {
+          if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || (practicaInput != null && practicaInput.isEmpty())) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
           } else if (p == null) {

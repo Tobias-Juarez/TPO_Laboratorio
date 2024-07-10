@@ -43,7 +43,7 @@ public class FrmPrincipal  extends JFrame {
                 String password = txtPassword.getText();
                 if(sistemaDeGestion.getUsuarios().stream().anyMatch(u -> u.getUsuario().equals(usuario) && u.getPassword().equals(password))) {
                     RolUsuario rol = getRol(usuario);
-                    FrmMenu frame = new FrmMenu(self, "Menú",rol,sistemaDeGestion, laboratorio,atencionAlPublico);
+                    FrmMenu frame = new FrmMenu(self, "Menú",rol,sistemaDeGestion, laboratorio, atencionAlPublico);
                     frame.setVisible(true);
                 }
                 else {

@@ -101,4 +101,12 @@ public class Laboratorio {
         }
         return null;
     }
+    public Practica buscarPracticaPorNombre(String nombre) {
+        for (Practica p : practicas) {
+            if (p.getNombre().equals(nombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

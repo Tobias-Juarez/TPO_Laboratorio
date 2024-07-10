@@ -86,7 +86,7 @@ public class FrmMenu extends JDialog {
         resultadosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmResultados frame = new FrmResultados(self, "Resultados", rol);
+                FrmResultados frame = new FrmResultados(self, "Resultados", rol, laboratorio, atencionAlPublico);
                 frame.setVisible(true);
 
             }

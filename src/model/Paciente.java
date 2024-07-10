@@ -13,7 +13,13 @@ public class Paciente {
 
     private ArrayList<Peticion> peticiones;
 
-    public Paciente() {
+    public Paciente( int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.mail = mail;
+        this.sexo = sexo;
+        this.edad = edad;
         this.peticiones = new ArrayList<>();
     }
 
@@ -29,11 +35,11 @@ public class Paciente {
         return peticiones;
     }
 
-    public void altaPeticion( int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public void altaPeticion( int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
         this.peticiones.add(p);
     }
-    public void modificarPeticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public void modificarPeticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         for (Peticion p : peticiones) {
             if (p.getId() == id) {
                 p.setObraSocial(obraSocial);

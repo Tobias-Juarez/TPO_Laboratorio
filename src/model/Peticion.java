@@ -1,8 +1,6 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Peticion {
     private int id;
@@ -10,17 +8,17 @@ public class Peticion {
     private String fechaCarga;
     private String fechaEntrega;
     private String estado;
-    private String practica;
+    private Practica practica;
     private ArrayList<Resultado> resultados;
 
-    public Peticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, String practica) {
+    public Peticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
         this.id = id;
         this.obraSocial = obraSocial;
         this.fechaCarga = fechaCarga;
         this.fechaEntrega = fechaEntrega;
         this.estado = estado;
         this.practica = practica;
-    }
+        this.resultados = new ArrayList<>();}
 
     public int getId() {
         return id;
@@ -46,7 +44,7 @@ public class Peticion {
         this.fechaCarga = fechaCarga;
     }
 
-    public String getPractica() {
+    public Practica getPractica() {
         return practica;
     }
 
@@ -66,7 +64,7 @@ public class Peticion {
         this.estado = estado;
     }
 
-    public void setPractica(String practica) {
+    public void setPractica(Practica practica) {
         this.practica = practica;
     }
 }

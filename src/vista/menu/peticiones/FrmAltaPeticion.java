@@ -3,6 +3,7 @@ package vista.menu.peticiones;
 import controller.AtencionAlPublico;
 import controller.Laboratorio;
 import model.Paciente;
+import model.Practica;
 import utils.TablePeticion;
 
 import java.awt.Window;
@@ -29,32 +30,32 @@ public class FrmAltaPeticion extends JDialog {
   public FrmAltaPeticion(Window owner, String titulo, AtencionAlPublico atencionAlPublico, int selectedItem, TablePeticion tableModel, Laboratorio laboratorio) {
     super(owner, titulo);
     DefaultComboBoxModel model = new DefaultComboBoxModel();
-    ArrayList<String> listaPracticas = new ArrayList<String>();
-    for (int i = 0; i < laboratorio.getPracticas().size(); i++) {
-      listaPracticas.add(laboratorio.getPracticas().get(i).getNombre());
+    ArrayList<Practica> listaPracticas = laboratorio.getPracticas();
+    for ( Practica p : listaPracticas) {
+        model.addElement(p.getNombre());
     }
-    model.addAll(listaPracticas);
     cbPracticas.setModel(model);
     setContentPane(pnlPrincipal);
     setModal(true);
     setSize(500, 400);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(atencionAlPublico, selectedItem, tableModel);
+    asociarEventos(atencionAlPublico, laboratorio, selectedItem, tableModel);
   }
 
-  private void asociarEventos(AtencionAlPublico atencionAlPublico, int selectedItem, TablePeticion tableModel) {
+  private void asociarEventos(AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, int selectedItem, TablePeticion tableModel) {
     altaDePeticionButton.addActionListener(e -> {
       String idInput = txtId.getText();
       String obraSocial = txtObraSocial.getText();
       String fechaCarga = txtFechaCarga.getText();
       String fechaEntrega = txtFechaEntrega.getText();
       String estado = txtEstado.getText();
-      String practica = (String) cbPracticas.getSelectedItem();
+      String practicaInput = (String) cbPracticas.getSelectedItem();
+      Practica practica = laboratorio.buscarPracticaPorNombre(practicaInput);
       try {
         int id = Integer.parseInt(idInput);
         Paciente p = atencionAlPublico.buscarPaciente(selectedItem);
-        if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || practica.isEmpty()) {
+        if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || (practicaInput != null && practicaInput.isEmpty())) {
           JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         } else if (p == null) {
