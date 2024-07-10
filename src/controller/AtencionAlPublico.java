@@ -149,4 +149,13 @@ public class AtencionAlPublico {
         }
         return this.peticiones;
     }
+    public Practica getPracticaDePeticion(int id) {
+        Practica practica = null;
+        for (Peticion pe : this.peticiones) {
+            if (pe.getId() == id) {
+                practica = pe.getPractica();
+            }
+        }
+        return practica;
+    }
 }

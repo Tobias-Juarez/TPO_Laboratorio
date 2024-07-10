@@ -43,6 +43,7 @@ public class Resultado {
         return valores;
     }
 
+
     public void setValores(ArrayList<Valor> valores) {
         this.valores = valores;
     }
