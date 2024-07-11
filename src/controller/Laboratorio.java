@@ -11,6 +11,8 @@ public class Laboratorio {
     private ArrayList<Practica> practicas;
     private ArrayList<Resultado> resultados;
     private ArrayList<Muestra> muestras;
+    private AtencionAlPublico atencionAlPublico;
+
     private Laboratorio() throws Exception {
         this.practicasDAO = new PracticasDAO();
         this.practicas = getPracticas();
@@ -108,4 +110,6 @@ public class Laboratorio {
         }
         return null;
     }
+
+
 }

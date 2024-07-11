@@ -43,8 +43,17 @@ public class Resultado {
         return valores;
     }
 
-
     public void setValores(ArrayList<Valor> valores) {
         this.valores = valores;
+    }
+
+    @Override
+    public String toString() {
+        return "Resultado{" +
+                "idResultado=" + idResultado +
+                ", practica='" + practica + '\'' +
+                ", idPeticion=" + idPeticion +
+                ", valores=" + valores +
+                '}';
     }
 }

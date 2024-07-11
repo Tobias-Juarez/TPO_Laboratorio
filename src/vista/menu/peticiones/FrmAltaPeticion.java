@@ -61,9 +61,13 @@ public class FrmAltaPeticion extends JDialog {
         } else if (p == null) {
           JOptionPane.showMessageDialog(this, "No existe un paciente con ese DNI", "Error", JOptionPane.ERROR_MESSAGE);
           return;
+        } else if (atencionAlPublico.getPeticionesDePacientes().stream().anyMatch( peticion -> peticion.getId() == id)) {
+          JOptionPane.showMessageDialog(this, "Ya existe una petición con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
+          return;
         } else {
         atencionAlPublico.altaPeticion(selectedItem, id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
         tableModel.add(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+        JOptionPane.showMessageDialog(this, "Peticion creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         dispose();
         }
       } catch (NumberFormatException ex) {

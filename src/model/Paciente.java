@@ -9,11 +9,9 @@ public class Paciente {
     private String mail;
     private String sexo;
     private int edad;
-    private ArrayList<Resultado> resultados;
-
     private ArrayList<Peticion> peticiones;
 
-    public Paciente( int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
+    public Paciente(int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
         this.dni = dni;
         this.nombre = nombre;
         this.domicilio = domicilio;
@@ -22,15 +20,6 @@ public class Paciente {
         this.edad = edad;
         this.peticiones = new ArrayList<>();
     }
-
-    public ArrayList<Resultado> getResultados() {
-        return resultados;
-    }
-
-    public void setResultados(ArrayList<Resultado> resultados) {
-        this.resultados = resultados;
-    }
-
     public ArrayList<Peticion> getPeticiones() {
         return peticiones;
     }
@@ -104,6 +93,14 @@ public class Paciente {
         this.edad = edad;
     }
 
+    public void cargarResultado( int id, String practica, int idPeticion, ArrayList<Valor> valores) {
+        for (Peticion p : peticiones) {
+            if (p.getId() == idPeticion) {
+                p.agregarResultado(id, practica, idPeticion, valores);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Paciente{" +
@@ -115,5 +112,11 @@ public class Paciente {
             ", edad=" + edad +
             ", peticiones=" + peticiones +
             '}';
+    }
+
+    public void eliminarResultado(int id) {
+        for (Peticion p : peticiones) {
+            p.eliminarResultado(id);
+        }
     }
 }

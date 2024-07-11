@@ -67,4 +67,32 @@ public class Peticion {
     public void setPractica(Practica practica) {
         this.practica = practica;
     }
+
+    public ArrayList<Resultado> getResultados() {
+        return resultados;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Peticion{" +
+                "id=" + id +
+                ", obraSocial='" + obraSocial + '\'' +
+                ", fechaCarga='" + fechaCarga + '\'' +
+                ", fechaEntrega='" + fechaEntrega + '\'' +
+                ", estado='" + estado + '\'' +
+                ", practica=" + practica +
+                ", resultados=" + resultados +
+                '}';
+    }
+
+    public void agregarResultado(int id, String practica, int idPeticion, ArrayList<Valor> valores) {
+        Resultado r = new Resultado(id, practica, idPeticion, valores);
+        this.resultados.add(r);
+    }
+
+    public void eliminarResultado(int id) {
+        this.resultados.removeIf(resultado -> resultado.getIdResultado() == id);
+    }
 }

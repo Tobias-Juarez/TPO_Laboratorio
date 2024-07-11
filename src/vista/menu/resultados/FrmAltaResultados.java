@@ -22,7 +22,7 @@ public class FrmAltaResultados extends JDialog{
   private JLabel lblValores;
   private JButton crearResultadoButton;
   private JTable tableValores;
-  private TableValor tableModel;
+  private final TableValor tableModel;
   private JButton nuevoValorButton;
   private JComboBox cbPeticiones;
   private FrmAltaResultados self;
@@ -47,6 +47,7 @@ public class FrmAltaResultados extends JDialog{
     asociarEventos(laboratorio, atencionAlPublico, listaPeticiones, tableModel, this.tableModel);
 
 
+
   }
 
   private void asociarEventos(Laboratorio laboratorio, AtencionAlPublico atencionAlPublico, ArrayList<Peticion> listaPeticiones, TableResultado tableModel, TableValor tableValor) {
@@ -58,6 +59,32 @@ public class FrmAltaResultados extends JDialog{
         Practica practica = atencionAlPublico.getPracticaDePeticion(id);
         FrmNuevoValor frame = new FrmNuevoValor(self,"Nuevo Valor", laboratorio, atencionAlPublico, practica, listaValores, tableValor);
         frame.setVisible(true);
+      }
+    });
+    crearResultadoButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String idInput = txtId.getText();
+        int idPeticion = (int) cbPeticiones.getSelectedItem();
+        try {
+          int id = Integer.parseInt(idInput);
+          if (idInput.isEmpty()) {
+            JOptionPane.showMessageDialog(FrmAltaResultados.this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+          } else if (atencionAlPublico.getResultadosDePeticiones().stream().anyMatch(resultado -> resultado.getIdResultado() == id)) {
+            JOptionPane.showMessageDialog(FrmAltaResultados.this, "El ID de resultado ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+          } else {
+
+            Practica practica = atencionAlPublico.getPracticaDePeticion(idPeticion);
+            atencionAlPublico.agregarResultado(id, practica, idPeticion, listaValores);
+            tableModel.add(id, practica.getNombre(), idPeticion, listaValores);
+            JOptionPane.showMessageDialog(FrmAltaResultados.this, "Resultado creado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+          }
+
+        } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(FrmAltaResultados.this, "El ID debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
       }
     });
   }

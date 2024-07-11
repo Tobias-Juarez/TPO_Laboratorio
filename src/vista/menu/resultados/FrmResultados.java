@@ -25,12 +25,13 @@ public class FrmResultados extends JDialog {
     super(owner, titulo);
     tableModel = new TableResultado();
     tableResultados.setModel(tableModel);
-    for (int i = 0; i < laboratorio.getResultados().size(); i++) {
+    atencionAlPublico.setResultadosDePeticion();
+    for (int i = 0; i < atencionAlPublico.getResultados().size(); i++) {
       tableModel.add(
-              laboratorio.getResultados().get(i).getIdResultado(),
-              laboratorio.getResultados().get(i).getPractica(),
-              laboratorio.getResultados().get(i).getIdPeticion(),
-              laboratorio.getResultados().get(i).getValores());
+              atencionAlPublico.getResultados().get(i).getIdResultado(),
+              atencionAlPublico.getResultados().get(i).getPractica(),
+              atencionAlPublico.getResultados().get(i).getIdPeticion(),
+              atencionAlPublico.getResultados().get(i).getValores());
     }
 
     setContentPane(pnlPrincipal);
@@ -66,14 +67,14 @@ public class FrmResultados extends JDialog {
     modificarResultadoButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        FrmModificarResultados frame = new FrmModificarResultados(self,"Modificar Resultados");
+        FrmModificarResultados frame = new FrmModificarResultados(self,"Modificar Resultados", laboratorio, atencionAlPublico, tableModel);
         frame.setVisible(true);
       }
     });
     eliminarResultadoButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        FrmBajaResultados frame = new FrmBajaResultados(self,"Baja Resultados");
+        FrmBajaResultados frame = new FrmBajaResultados(self,"Baja Resultados", laboratorio, atencionAlPublico, tableModel);
         frame.setVisible(true);
       }
     });
