@@ -178,4 +178,21 @@ public class AtencionAlPublico {
     public ArrayList<Resultado> getResultados() {
         return resultados;
     }
+
+    public boolean tienePeticionesFinalizadas(int dni) {
+        for (Paciente p : pacientes) {
+            if (p.getDni() == dni) {
+                return p.tienePeticionesConResultados();
+            }
+        }
+        return false;
+    }
+    public boolean tieneValoresReservados(ArrayList<Valor> listaValores) {
+        for (Valor v : listaValores) {
+            if (v.isReservado()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -34,7 +34,7 @@ public class Paciente {
                 p.setObraSocial(obraSocial);
                 p.setFechaCarga(fechaCarga);
                 p.setFechaEntrega(fechaEntrega);
-                p.setEstado(estado);
+                p.setEstado();
                 p.setPractica(practica);
                 return;
             }
@@ -118,5 +118,13 @@ public class Paciente {
         for (Peticion p : peticiones) {
             p.eliminarResultado(id);
         }
+    }
+    public boolean tienePeticionesConResultados() {
+        for (Peticion p : peticiones) {
+            if (!p.getResultados().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

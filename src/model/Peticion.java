@@ -60,8 +60,12 @@ public class Peticion {
         return estado;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstado() {
+        if (!resultados.isEmpty()) {
+            this.estado = "Finalizado";
+        } else {
+            this.estado = "En proceso";
+        }
     }
 
     public void setPractica(Practica practica) {
@@ -89,10 +93,12 @@ public class Peticion {
 
     public void agregarResultado(int id, String practica, int idPeticion, ArrayList<Valor> valores) {
         Resultado r = new Resultado(id, practica, idPeticion, valores);
+
         this.resultados.add(r);
     }
 
     public void eliminarResultado(int id) {
         this.resultados.removeIf(resultado -> resultado.getIdResultado() == id);
     }
+
 }

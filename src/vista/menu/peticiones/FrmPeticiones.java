@@ -57,14 +57,16 @@ public class FrmPeticiones extends JDialog {
         Paciente p = atencionAlPublico.buscarPaciente((int) cbPaciente.getSelectedItem());
         ArrayList<Peticion> peticiones = p.getPeticiones();
         if (peticiones != null) {
-          for (int i = 0; i < peticiones.size(); i++) {
-            tableModel.add(peticiones.get(i).getId(),
-                    peticiones.get(i).getObraSocial(),
-                    peticiones.get(i).getFechaCarga(),
-                    peticiones.get(i).getFechaEntrega(),
-                    peticiones.get(i).getEstado(),
-                    peticiones.get(i).getPractica());
-          }
+            for (Peticion pe : peticiones) {
+                pe.setEstado();
+                tableModel.add(
+                        pe.getId(),
+                        pe.getObraSocial(),
+                        pe.getFechaCarga(),
+                        pe.getFechaEntrega(),
+                        pe.getEstado(),
+                        pe.getPractica());
+            }
         }
       }
     });

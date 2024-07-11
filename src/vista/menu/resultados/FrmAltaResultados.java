@@ -73,9 +73,9 @@ public class FrmAltaResultados extends JDialog{
           } else if (atencionAlPublico.getResultadosDePeticiones().stream().anyMatch(resultado -> resultado.getIdResultado() == id)) {
             JOptionPane.showMessageDialog(FrmAltaResultados.this, "El ID de resultado ya existe", "Error", JOptionPane.ERROR_MESSAGE);
           } else {
-
             Practica practica = atencionAlPublico.getPracticaDePeticion(idPeticion);
             atencionAlPublico.agregarResultado(id, practica, idPeticion, listaValores);
+            atencionAlPublico.definirEstadoPeticion(idPeticion);
             tableModel.add(id, practica.getNombre(), idPeticion, listaValores);
             JOptionPane.showMessageDialog(FrmAltaResultados.this, "Resultado creado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dispose();

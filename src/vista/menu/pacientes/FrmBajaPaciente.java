@@ -36,7 +36,9 @@ public class FrmBajaPaciente extends JDialog {
           JOptionPane.showMessageDialog(this, "Debe ingresar un DNI", "Error", JOptionPane.ERROR_MESSAGE);
         }else if (!atencionAlPublico.existePaciente(dni)) {
           JOptionPane.showMessageDialog(this, "No existe un paciente con ese DNI", "Error", JOptionPane.ERROR_MESSAGE);
-        }else {
+        } else if ( atencionAlPublico.tienePeticionesFinalizadas(dni)) {
+            JOptionPane.showMessageDialog(this, "No se puede eliminar un paciente con resultados finalizados", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
           atencionAlPublico.bajaPaciente(dni);
           tableModel.remove(dni);
           JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
