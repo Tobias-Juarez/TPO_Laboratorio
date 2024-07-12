@@ -36,7 +36,7 @@ public class FrmResultados extends JDialog {
 
     setContentPane(pnlPrincipal);
     setModal(true);
-    setSize(500, 400);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     this.self = this;
@@ -47,7 +47,6 @@ public class FrmResultados extends JDialog {
   private void asociarEventos(RolUsuario rol, Laboratorio laboratorio, AtencionAlPublico atencionAlPublico, TableResultado tableModel) {
     if (rol == RolUsuario.LABORATORISTA) {
       eliminarResultadoButton.setEnabled(false);
-      consultarResultadosButton.setEnabled(false);
     }
     if (rol == RolUsuario.RECEPCIONISTA) {
       crearResultadoButton.setEnabled(false);
