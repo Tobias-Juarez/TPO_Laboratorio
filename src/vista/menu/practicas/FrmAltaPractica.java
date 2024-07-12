@@ -70,7 +70,7 @@ public class FrmAltaPractica extends JDialog {
           try {
             int demoraResultado = Integer.parseInt(demora);
             laboratorio.altaPractica(codigo, nombre, grupo, demoraResultado, listaValoresCriticos);
-            tableModel.add(codigo, nombre, grupo, demoraResultado);
+            tableModel.add(codigo, nombre, grupo, demoraResultado, listaValoresCriticos);
             JOptionPane.showMessageDialog(self, "Práctica añadida con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dispose();
           } catch (NumberFormatException ex) {

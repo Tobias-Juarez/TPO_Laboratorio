@@ -29,7 +29,9 @@ public class FrmPracticas extends JDialog {
           laboratorio.getPracticas().get(i).getCodigo(),
           laboratorio.getPracticas().get(i).getNombre(),
           laboratorio.getPracticas().get(i).getGrupo(),
-          laboratorio.getPracticas().get(i).getDemoraResultado());
+          laboratorio.getPracticas().get(i).getDemoraResultado(),
+          laboratorio.getPracticas().get(i).getValoresNumericos()
+      );
     }
     setContentPane(pnlPrincipal);
     setModal(true);

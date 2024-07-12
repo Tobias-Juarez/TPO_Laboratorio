@@ -5,11 +5,12 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import model.Practica;
+import model.ValorNumerico;
 
 public class TablePractica extends AbstractTableModel {
   private List<Practica> listaPracticas = new ArrayList<Practica>();
   protected String[] columnNames = new String[]{
-      "Codigo", "Nombre", "Grupo", "Demora Resultado (hs)"};
+      "Codigo", "Nombre", "Grupo", "Demora Resultado (hs)", "Valores Numericos"};
   protected Class[] columnClasses = new Class[]{
       Integer.class, String.class, String.class, String.class, String.class, Integer.class};
 
@@ -34,11 +35,13 @@ public class TablePractica extends AbstractTableModel {
       case 1 -> listaPracticas.get(rowIndex).getNombre();
       case 2 -> listaPracticas.get(rowIndex).getGrupo();
       case 3 -> listaPracticas.get(rowIndex).getDemoraResultado();
+        case 4 -> listaPracticas.get(rowIndex).getValoresNumericos();
       default -> null;
     };
   }
-  public void add(String codigo, String nombre, String grupo, int demoraResultado) {
+  public void add(String codigo, String nombre, String grupo, int demoraResultado, ArrayList<ValorNumerico> listaValoresCriticos) {
     Practica p = new Practica(codigo, nombre, grupo, demoraResultado);
+    p.setValoresCriticos( listaValoresCriticos);
     listaPracticas.add(p);
     fireTableDataChanged();
   }

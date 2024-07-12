@@ -80,5 +80,9 @@ public class Practica {
                 ", valoresString=" + valoresString +
                 '}';
     }
+
+    public void setValoresCriticos(ArrayList<ValorNumerico> listaValoresCriticos) {
+        this.valoresNumericos = listaValoresCriticos;
+    }
 }
 

@@ -33,4 +33,11 @@ public class ValorNumerico {
     public boolean isCritico(int valor) {
         return valor < minimo || valor > maximo;
     }
+
+    @Override
+    public String toString() {
+        return  "nombre='" + nombre + '\'' +
+                ", " + minimo +
+                ", " + maximo;
+    }
 }
