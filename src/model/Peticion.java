@@ -114,4 +114,18 @@ public class Peticion {
         this.resultados.removeIf(resultado -> resultado.getIdResultado() == id);
     }
 
+    public boolean tieneValoresCriticos() {
+        for (Resultado r : resultados) {
+            for (Valor v : r.getValores()) {
+                for (ValorNumerico vn : practica.getValoresNumericos()) {
+                    if (v.getNombre().equals(vn.getNombre())){
+                        if (v.getValor() < vn.getMinimo() || v.getValor() > vn.getMaximo()){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

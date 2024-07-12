@@ -29,4 +29,8 @@ public class ValorNumerico {
     public void setMaximo(double maximo) {
         this.maximo = maximo;
     }
+
+    public boolean isCritico(int valor) {
+        return valor < minimo || valor > maximo;
+    }
 }

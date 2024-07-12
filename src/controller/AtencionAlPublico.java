@@ -205,4 +205,16 @@ public class AtencionAlPublico {
             }
         }
     }
+    public ArrayList<Peticion> getPeticionesConValoresCriticos() {
+        ArrayList<Peticion> peticionesConValoresCriticos = new ArrayList<>();
+        for (Paciente p : pacientes) {
+            for (Peticion pe : p.getPeticiones()) {
+                if (pe.tieneValoresCriticos()) {
+                    peticionesConValoresCriticos.add(pe);
+                }
+            }
+        }
+        return peticionesConValoresCriticos;
+
+    }
 }

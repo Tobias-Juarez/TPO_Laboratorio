@@ -22,8 +22,8 @@ public class FrmPeticiones extends JDialog {
   private JTable tablePeticiones;
   private TablePeticion tableModel;
   private JComboBox cbPaciente;
-    private JButton peticionesConValoresCriticosButton;
-    private FrmPeticiones self;
+  private JButton peticionesConValoresCriticosButton;
+  private FrmPeticiones self;
 
   public FrmPeticiones(Window owner, String titulo, RolUsuario rol, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     super(owner, titulo);
@@ -71,6 +71,13 @@ public class FrmPeticiones extends JDialog {
                 );
             }
         }
+      }
+    });
+    peticionesConValoresCriticosButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        FrmPeticionesConValoresCriticos frame = new FrmPeticionesConValoresCriticos(self, "Peticiones con valores críticos", atencionAlPublico, laboratorio, sistemaDeGestion);
+        frame.setVisible(true);
       }
     });
     crearPeticionButton.addActionListener(new ActionListener() {
