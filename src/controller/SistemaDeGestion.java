@@ -1,6 +1,5 @@
 package controller;
 
-import DAO.PacientesDAO;
 import DAO.SucursalesDAO;
 import DAO.UsuariosDAO;
 import model.*;
@@ -45,9 +44,8 @@ public class SistemaDeGestion {
             throw new RuntimeException(e);
         }
     }
-    public void setPeticiones(){
-        ArrayList<Peticion> peticiones= AtencionAlPublico.getInstance().getPeticionesDePacientes();
-        for (Sucursal s : sucursales) {
+    public void setPeticiones(ArrayList<Peticion> peticiones){
+        for (Sucursal s : this.sucursales) {
             for (Peticion p : peticiones) {
                 if (p.getSucursal().getId() == s.getId()) {
                     if (s.getPeticiones().stream().anyMatch(peticion -> peticion.getId() == p.getId())) {

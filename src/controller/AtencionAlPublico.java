@@ -217,4 +217,18 @@ public class AtencionAlPublico {
         return peticionesConValoresCriticos;
 
     }
+
+    public void actualizarSucursalDePeticiones(ArrayList<Peticion> peticiones, int id) {
+        SistemaDeGestion sistemaDeGestion = SistemaDeGestion.getInstance();
+        for (Peticion p : peticiones) {
+            for (Paciente pa : pacientes) {
+                for (Peticion pe : pa.getPeticiones()) {
+                    if (pe.getId() == p.getId()) {
+                        pe.setSucursal(sistemaDeGestion.buscarSucursal(id));
+                    }
+                }
+            }
+        }
+        this.guardarPacientes();
+    }
 }

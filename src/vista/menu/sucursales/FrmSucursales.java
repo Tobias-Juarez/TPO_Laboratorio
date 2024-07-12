@@ -1,5 +1,6 @@
 package vista.menu.sucursales;
 
+import controller.AtencionAlPublico;
 import controller.SistemaDeGestion;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,7 @@ public class FrmSucursales extends JDialog {
   private FrmSucursales self;
 
 
-  public FrmSucursales(Window owner, String titulo, SistemaDeGestion sistemaDeGestion) {
+  public FrmSucursales(Window owner, String titulo, SistemaDeGestion sistemaDeGestion, AtencionAlPublico atencionAlPublico) {
     super(owner, titulo);
     tableModel = new TableSucursal();
     tableSucursales.setModel(tableModel);
@@ -39,11 +40,12 @@ public class FrmSucursales extends JDialog {
     setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(sistemaDeGestion, tableModel);
+    asociarEventos(sistemaDeGestion, tableModel, atencionAlPublico);
     this.self = this;
   }
 
-  private void asociarEventos(SistemaDeGestion sistemaDeGestion, TableSucursal tableModel) {
+  private void asociarEventos(SistemaDeGestion sistemaDeGestion, TableSucursal tableModel, AtencionAlPublico atencionAlPublico) {
+    sistemaDeGestion.setPeticiones(atencionAlPublico.getPeticionesDePacientes());
     crearSucursalButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -61,7 +63,7 @@ public class FrmSucursales extends JDialog {
     eliminarSucursalButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        FrmBajaSucursal frame = new FrmBajaSucursal(self,"Baja Sucursal", sistemaDeGestion, tableModel);
+        FrmBajaSucursal frame = new FrmBajaSucursal(self,"Baja Sucursal", sistemaDeGestion, tableModel, atencionAlPublico);
         frame.setVisible(true);
 
       }
