@@ -36,7 +36,7 @@ public class FrmSucursales extends JDialog {
     }
     setContentPane(pnlPrincipal);
     setModal(true);
-    setSize(500, 400);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     asociarEventos(sistemaDeGestion, tableModel);

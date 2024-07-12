@@ -22,7 +22,8 @@ public class FrmPeticiones extends JDialog {
   private JTable tablePeticiones;
   private TablePeticion tableModel;
   private JComboBox cbPaciente;
-  private FrmPeticiones self;
+    private JButton peticionesConValoresCriticosButton;
+    private FrmPeticiones self;
 
   public FrmPeticiones(Window owner, String titulo, RolUsuario rol, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     super(owner, titulo);
@@ -37,7 +38,7 @@ public class FrmPeticiones extends JDialog {
     cbPaciente.setModel(model);
     setContentPane(pnlPrincipal);
     setModal(true);
-    setSize(500, 400);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     asociarEventos(rol, atencionAlPublico, tableModel, laboratorio, sistemaDeGestion);

@@ -24,7 +24,7 @@ public class FrmModificarResultados extends JDialog {
   private JButton crearResultadoButton;
   private JTable tableValores;
   private final TableValor tableModel;
-    private FrmModificarResultados self;
+  private FrmModificarResultados self;
   private JButton nuevoValorButton;
   private JComboBox cbPeticiones;
 
@@ -42,7 +42,7 @@ public class FrmModificarResultados extends JDialog {
 
     setContentPane(pnlPrincipal);
     setModal(true);
-    setSize(500, 400);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     asociarEventos(laboratorio, atencionAlPublico, listaPeticiones, tableModel, this.tableModel);

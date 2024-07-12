@@ -20,7 +20,7 @@ public class FrmBajaPeticion extends JDialog {
     super(owner, titulo);
     setContentPane(pnlPrincipal);
     setModal(true);
-    setSize(500, 400);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     asociarEventos(dni, tableModel, atencionAlPublico, sistemaDeGestion);
