@@ -9,16 +9,17 @@ public class Peticion {
     private String fechaEntrega;
     private String estado;
     private Practica practica;
-    private ArrayList<Resultado> resultados;
+    private Sucursal sucursal;
+    private final ArrayList<Resultado> resultados = new ArrayList<>();
 
-    public Peticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
+    public Peticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
         this.id = id;
         this.obraSocial = obraSocial;
         this.fechaCarga = fechaCarga;
         this.fechaEntrega = fechaEntrega;
-        this.estado = estado;
         this.practica = practica;
-        this.resultados = new ArrayList<>();}
+        this.sucursal = sucursal;
+        ;}
 
     public int getId() {
         return id;
@@ -64,6 +65,14 @@ public class Peticion {
         this.estado = estado;
     }
 
+    public void actualizarEstado() {
+        if (!resultados.isEmpty()){
+            this.estado = "Finalizado";
+        } else {
+            this.estado = "En proceso";
+        }
+    }
+
     public void setPractica(Practica practica) {
         this.practica = practica;
     }
@@ -89,10 +98,20 @@ public class Peticion {
 
     public void agregarResultado(int id, String practica, int idPeticion, ArrayList<Valor> valores) {
         Resultado r = new Resultado(id, practica, idPeticion, valores);
+
         this.resultados.add(r);
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
     public void eliminarResultado(int id) {
         this.resultados.removeIf(resultado -> resultado.getIdResultado() == id);
     }
+
 }

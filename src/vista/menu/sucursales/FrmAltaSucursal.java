@@ -32,7 +32,6 @@ public class FrmAltaSucursal extends JDialog {
       String idInput = txtIdSucursal.getText();
       String direccion = txtDireccion.getText();
       String numeroInput = txtNumero.getText();
-
       try {
         int id=Integer.parseInt(idInput);
         int numero=Integer.parseInt(numeroInput);
@@ -41,9 +40,8 @@ public class FrmAltaSucursal extends JDialog {
         } else if (sistemaDeGestion.existeSucursal(id)) {
           JOptionPane.showMessageDialog(this, "Ya existe una Sucursal con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
         }else {
-          boolean peticionesResultadosFinalizados = false;
-          sistemaDeGestion.altaSucursal(id,direccion,numero, peticionesResultadosFinalizados);
-          tableModel.add(id, direccion, numero, peticionesResultadosFinalizados);
+          sistemaDeGestion.altaSucursal(id,direccion,numero);
+          tableModel.add(id, direccion, numero);
           JOptionPane.showMessageDialog(this, "Sucursal creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           dispose();
         }

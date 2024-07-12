@@ -45,8 +45,8 @@ public class FrmModificarSucursal extends JDialog {
           Sucursal s = sistemaDeGestion.buscarSucursal(id);
           tableModel.remove(id);
           sistemaDeGestion.bajaSucursal(id);
-          sistemaDeGestion.altaSucursal(id, direccion, numero, s.isPeticionesResultadosFinalizados());
-          tableModel.add(id, direccion, numero, s.isPeticionesResultadosFinalizados());
+          sistemaDeGestion.altaSucursal(id, direccion, numero);
+          tableModel.add(id, direccion, numero);
 
           JOptionPane.showMessageDialog(this, "Sucursal modificada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           dispose();

@@ -11,9 +11,9 @@ import java.util.List;
 public class TableValor extends AbstractTableModel {
     private List<Valor> listaValores = new ArrayList<>();
     protected String[] columnNames = new String[]{
-            "Nombre", "Valor"};
+            "Nombre", "Valor", "Reservado"};
     protected Class[] columnClasses = new Class[]{
-            String.class, Integer.class};
+            String.class, Integer.class, Boolean.class};
 
     @Override
     public String getColumnName(int column) {return columnNames[column];}
@@ -34,11 +34,12 @@ public class TableValor extends AbstractTableModel {
         return switch (columnIndex) {
             case 0 -> listaValores.get(rowIndex).getNombre();
             case 1 -> listaValores.get(rowIndex).getValor();
+            case 2 -> listaValores.get(rowIndex).isReservado();
             default -> null;
         };
     }
-    public void add(String nombre, int valor) {
-        Valor v = new Valor(nombre, valor);
+    public void add(String nombre, int valor, boolean reservado) {
+        Valor v = new Valor(nombre, valor, reservado);
         listaValores.add(v);
         fireTableDataChanged();
     }

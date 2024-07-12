@@ -18,6 +18,7 @@ public class FrmNuevoValor extends JDialog{
     private JTextField txtValor;
     private JComboBox cbNombreValor;
     private JButton agregarValorButton;
+    private JCheckBox reservadoCheckBox;
 
     public FrmNuevoValor(Window owner, String titulo, Laboratorio laboratorio, AtencionAlPublico atencionAlPublico, Practica practica, ArrayList<Valor> listaValores, TableValor tableValor) {
         super(owner, titulo);
@@ -44,6 +45,7 @@ public class FrmNuevoValor extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 String nombre = (String) cbNombreValor.getSelectedItem();
                 String valorInput = txtValor.getText();
+                boolean reservado = reservadoCheckBox.isSelected();
                 try {
                     int valor = Integer.parseInt(valorInput);
                     if ((nombre != null && nombre.isEmpty()) || valorInput.isEmpty()) {
@@ -55,15 +57,15 @@ public class FrmNuevoValor extends JDialog{
                             if (v.getNombre().equals(nombre)) {
                                 tableValor.remove(nombre);
                                 v.setValor(valor);
-                                tableValor.add(nombre, valor);
+                                tableValor.add(nombre, valor, reservado);
                                 JOptionPane.showMessageDialog(null, "Valor Modificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                                 dispose();
                                 return;
                             }
                         }
-                        listaValores.add(new Valor(nombre, valor));
+                        listaValores.add(new Valor(nombre, valor, reservado));
                         JOptionPane.showMessageDialog(null, "Valor Agregado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                        tableValor.add(nombre, valor);
+                        tableValor.add(nombre, valor, reservado);
                         dispose();
 
 

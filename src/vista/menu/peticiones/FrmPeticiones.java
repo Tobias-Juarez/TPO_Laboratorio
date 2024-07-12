@@ -4,11 +4,11 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 import controller.AtencionAlPublico;
 import controller.Laboratorio;
+import controller.SistemaDeGestion;
 import model.Paciente;
 import model.Peticion;
 import model.RolUsuario;
@@ -24,7 +24,7 @@ public class FrmPeticiones extends JDialog {
   private JComboBox cbPaciente;
   private FrmPeticiones self;
 
-  public FrmPeticiones(Window owner, String titulo, RolUsuario rol, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio) {
+  public FrmPeticiones(Window owner, String titulo, RolUsuario rol, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     super(owner, titulo);
     tableModel = new TablePeticion();
     tablePeticiones.setModel(tableModel);
@@ -40,13 +40,13 @@ public class FrmPeticiones extends JDialog {
     setSize(500, 400);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(rol, atencionAlPublico, tableModel, laboratorio);
+    asociarEventos(rol, atencionAlPublico, tableModel, laboratorio, sistemaDeGestion);
     this.self = this;
 
   }
 
 
-  private void asociarEventos(RolUsuario rol, AtencionAlPublico atencionAlPublico, TablePeticion tableModel, Laboratorio laboratorio) {
+  private void asociarEventos(RolUsuario rol, AtencionAlPublico atencionAlPublico, TablePeticion tableModel, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     if (rol == RolUsuario.RECEPCIONISTA) {
       eliminarPeticionButton.setEnabled(false);
     }
@@ -57,14 +57,18 @@ public class FrmPeticiones extends JDialog {
         Paciente p = atencionAlPublico.buscarPaciente((int) cbPaciente.getSelectedItem());
         ArrayList<Peticion> peticiones = p.getPeticiones();
         if (peticiones != null) {
-          for (int i = 0; i < peticiones.size(); i++) {
-            tableModel.add(peticiones.get(i).getId(),
-                    peticiones.get(i).getObraSocial(),
-                    peticiones.get(i).getFechaCarga(),
-                    peticiones.get(i).getFechaEntrega(),
-                    peticiones.get(i).getEstado(),
-                    peticiones.get(i).getPractica());
-          }
+            for (Peticion pe : peticiones) {
+              atencionAlPublico.actualizarEstadoPeticion(pe.getId());
+              tableModel.add(
+                        pe.getId(),
+                        pe.getObraSocial(),
+                        pe.getFechaCarga(),
+                        pe.getFechaEntrega(),
+                        pe.getEstado(),
+                        pe.getPractica(),
+                        pe.getSucursal()
+                );
+            }
         }
       }
     });
@@ -75,7 +79,7 @@ public class FrmPeticiones extends JDialog {
           JOptionPane.showMessageDialog(self, "Debe seleccionar un paciente", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         }else {
-          FrmAltaPeticion frame = new FrmAltaPeticion(self, "Alta Petición", atencionAlPublico, (int) cbPaciente.getSelectedItem(), tableModel, laboratorio);
+          FrmAltaPeticion frame = new FrmAltaPeticion(self, "Alta Petición", atencionAlPublico, (int) cbPaciente.getSelectedItem(), tableModel, laboratorio, sistemaDeGestion);
           frame.setVisible(true);
         }
       }
@@ -87,7 +91,7 @@ public class FrmPeticiones extends JDialog {
           JOptionPane.showMessageDialog(self, "Debe seleccionar un paciente", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         }else {
-          FrmModificarPeticion frame = new FrmModificarPeticion(self, "Modificar Petición", (int) cbPaciente.getSelectedItem(), tableModel, atencionAlPublico, laboratorio);
+          FrmModificarPeticion frame = new FrmModificarPeticion(self, "Modificar Petición", (int) cbPaciente.getSelectedItem(), tableModel, atencionAlPublico, laboratorio, sistemaDeGestion);
           frame.setVisible(true);
         }
       }
@@ -99,7 +103,7 @@ public class FrmPeticiones extends JDialog {
           JOptionPane.showMessageDialog(self, "Debe seleccionar un paciente", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         }else {
-          FrmBajaPeticion frame = new FrmBajaPeticion(self, "Baja Petición", (int) cbPaciente.getSelectedItem(), tableModel, atencionAlPublico);
+          FrmBajaPeticion frame = new FrmBajaPeticion(self, "Baja Petición", (int) cbPaciente.getSelectedItem(), tableModel, atencionAlPublico, sistemaDeGestion);
           frame.setVisible(true);
         }
       }

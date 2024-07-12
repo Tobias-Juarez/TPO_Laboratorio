@@ -54,19 +54,19 @@ public class AtencionAlPublico {
             throw new RuntimeException(e);
         }
     }
-    public void altaPeticion(int dni,int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
+    public void altaPeticion(int dni,int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {
-                p.altaPeticion( id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+                p.altaPeticion( id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
                 this.guardarPacientes();
                 return;
             }
         }
     }
-    public void modificarPeticion(int dni, int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
+    public void modificarPeticion(int dni, int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {
-                p.modificarPeticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+                p.modificarPeticion(id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
                 this.guardarPacientes();
                 return;
             }
@@ -177,5 +177,32 @@ public class AtencionAlPublico {
 
     public ArrayList<Resultado> getResultados() {
         return resultados;
+    }
+
+    public boolean tienePeticionesFinalizadas(int dni) {
+        for (Paciente p : pacientes) {
+            if (p.getDni() == dni) {
+                return p.tienePeticionesConResultados();
+            }
+        }
+        return false;
+    }
+    public boolean tieneValoresReservados(ArrayList<Valor> listaValores) {
+        for (Valor v : listaValores) {
+            if (v.isReservado()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void actualizarEstadoPeticion(int id) {
+        for (Paciente p : pacientes) {
+            for (Peticion pe : p.getPeticiones()) {
+                if (pe.getId() == id) {
+                    pe.actualizarEstado();
+                    this.guardarPacientes();
+                }
+            }
+        }
     }
 }
