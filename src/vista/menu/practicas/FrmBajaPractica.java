@@ -36,7 +36,9 @@ public class FrmBajaPractica extends JDialog {
         JOptionPane.showMessageDialog(this, "Debe ingresar un codigo", "Error", JOptionPane.ERROR_MESSAGE);
       }else if (!laboratorio.existePractica(codigo)) {
         JOptionPane.showMessageDialog(this, "No existe una practica con ese codigo", "Error", JOptionPane.ERROR_MESSAGE);
-      }else {
+      } else if (laboratorio.existePeticionEnPractica(codigo)) {
+        JOptionPane.showMessageDialog(this, "No se puede eliminar la practica porque tiene peticiones asociadas", "Error", JOptionPane.ERROR_MESSAGE);
+      } else {
         laboratorio.bajaPractica(codigo);
         tableModel.remove(codigo);
         JOptionPane.showMessageDialog(this, "Practica eliminada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);

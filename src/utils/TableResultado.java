@@ -34,7 +34,14 @@ public class TableResultado extends AbstractTableModel {
             case 0 -> listaResultados.get(rowIndex).getIdResultado();
             case 1 -> listaResultados.get(rowIndex).getPractica();
             case 2 -> listaResultados.get(rowIndex).getIdPeticion();
-            case 3 -> listaResultados.get(rowIndex).getValores();
+            case 3 -> {
+                for (Valor v : listaResultados.get(rowIndex).getValores()) {
+                    if (v.isReservado()) {
+                        yield "Debe retirar por Sucursal";
+                    }
+                }
+                yield listaResultados.get(rowIndex).getValores();
+            }
             default -> null;
         };
     }

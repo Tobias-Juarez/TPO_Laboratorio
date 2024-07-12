@@ -6,13 +6,23 @@ public class Sucursal {
     private int id;
     private String direccion;
     private int numero;
-    private boolean peticionResultadosFinalizados;
+    private Usuario responsableTecnico;
+    ArrayList<Peticion> peticiones;
 
-    public Sucursal(int id, String direccion, int numero, boolean peticionResultadosFinalizados) {
+    public Sucursal(int id, String direccion, int numero, Usuario responsableTecnico) {
         this.id = id;
         this.direccion = direccion;
         this.numero = numero;
-        this.peticionResultadosFinalizados = peticionResultadosFinalizados;
+        this.responsableTecnico = responsableTecnico;
+        this.peticiones = new ArrayList<>();
+    }
+
+    public Usuario getResponsableTecnico() {
+        return responsableTecnico;
+    }
+
+    public void setResponsableTecnico(Usuario responsableTecnico) {
+        this.responsableTecnico = responsableTecnico;
     }
 
     public ArrayList<Peticion> getPeticiones() {
@@ -22,8 +32,6 @@ public class Sucursal {
     public void setPeticiones(ArrayList<Peticion> peticiones) {
         this.peticiones = peticiones;
     }
-
-    private ArrayList<Peticion> peticiones;
 
     public int getId() {
         return id;
@@ -49,15 +57,13 @@ public class Sucursal {
         this.numero = numero;
     }
 
-    public boolean isPeticionResultadosFinalizados() {
-        return peticionResultadosFinalizados;
-    }
 
-    public void setPeticionResultadosFinalizados(boolean peticionResultadosFinalizados) {
-        this.peticionResultadosFinalizados = peticionResultadosFinalizados;
-    }
-
-    public boolean isPeticionesResultadosFinalizados() {
-        return peticionResultadosFinalizados;
+    public boolean tienePeticionesConResultados() {
+        for (Peticion p : peticiones) {
+            if (!p.getResultados().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

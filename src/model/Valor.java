@@ -3,9 +3,11 @@ package model;
 public class Valor {
     private String nombre;
     private int valor;
-    public Valor(String nombre,int valor) {
+    private boolean reservado;
+    public Valor(String nombre,int valor, boolean reservado) {
         this.nombre = nombre;
         this.valor = valor;
+        this.reservado = reservado;
     }
 
     public String getNombre() {
@@ -22,6 +24,14 @@ public class Valor {
 
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    public boolean isReservado() {
+        return reservado;
+    }
+
+    public void setReservado(boolean reservado) {
+        this.reservado = reservado;
     }
 
     @Override

@@ -2,8 +2,10 @@ package vista.menu.peticiones;
 
 import controller.AtencionAlPublico;
 import controller.Laboratorio;
+import controller.SistemaDeGestion;
 import model.Paciente;
 import model.Practica;
+import model.Sucursal;
 import utils.TablePeticion;
 
 import java.awt.Window;
@@ -25,25 +27,32 @@ public class FrmAltaPeticion extends JDialog {
   private JLabel lblObraSocial;
   private JLabel lblId;
   private JComboBox cbPracticas;
+  private JComboBox cbSucursal;
 
 
-  public FrmAltaPeticion(Window owner, String titulo, AtencionAlPublico atencionAlPublico, int selectedItem, TablePeticion tableModel, Laboratorio laboratorio) {
+  public FrmAltaPeticion(Window owner, String titulo, AtencionAlPublico atencionAlPublico, int selectedItem, TablePeticion tableModel, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     super(owner, titulo);
-    DefaultComboBoxModel model = new DefaultComboBoxModel();
+    DefaultComboBoxModel modelPracticas = new DefaultComboBoxModel();
     ArrayList<Practica> listaPracticas = laboratorio.getPracticas();
     for ( Practica p : listaPracticas) {
-        model.addElement(p.getNombre());
+        modelPracticas.addElement(p.getNombre());
     }
-    cbPracticas.setModel(model);
+    cbPracticas.setModel(modelPracticas);
+    DefaultComboBoxModel modelSucursal = new DefaultComboBoxModel();
+    ArrayList<Sucursal> listaSucursales = sistemaDeGestion.getSucursales();
+    for ( Sucursal s : listaSucursales) {
+      modelSucursal.addElement(s.getId());
+    }
+    cbSucursal.setModel(modelSucursal);
     setContentPane(pnlPrincipal);
     setModal(true);
     setSize(500, 400);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(atencionAlPublico, laboratorio, selectedItem, tableModel);
+    asociarEventos(atencionAlPublico, laboratorio, selectedItem, tableModel, sistemaDeGestion);
   }
 
-  private void asociarEventos(AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, int selectedItem, TablePeticion tableModel) {
+  private void asociarEventos(AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, int selectedItem, TablePeticion tableModel, SistemaDeGestion sistemaDeGestion) {
     altaDePeticionButton.addActionListener(e -> {
       String idInput = txtId.getText();
       String obraSocial = txtObraSocial.getText();
@@ -52,10 +61,13 @@ public class FrmAltaPeticion extends JDialog {
       String estado = txtEstado.getText();
       String practicaInput = (String) cbPracticas.getSelectedItem();
       Practica practica = laboratorio.buscarPracticaPorNombre(practicaInput);
+
       try {
+        Integer sucursalInput = (Integer) cbSucursal.getSelectedItem();
+        Sucursal sucursal = sistemaDeGestion.buscarSucursal(sucursalInput);
         int id = Integer.parseInt(idInput);
         Paciente p = atencionAlPublico.buscarPaciente(selectedItem);
-        if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || (practicaInput != null && practicaInput.isEmpty())) {
+        if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || practicaInput != null && practicaInput.isEmpty() || sucursalInput.toString().isEmpty()) {
           JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         } else if (p == null) {
@@ -65,8 +77,8 @@ public class FrmAltaPeticion extends JDialog {
           JOptionPane.showMessageDialog(this, "Ya existe una petición con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         } else {
-        atencionAlPublico.altaPeticion(selectedItem, id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
-        tableModel.add(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+        atencionAlPublico.altaPeticion(selectedItem, id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
+        tableModel.add(id, obraSocial, fechaCarga, fechaEntrega, "En proceso", practica, sucursal);
         JOptionPane.showMessageDialog(this, "Peticion creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         dispose();
         }

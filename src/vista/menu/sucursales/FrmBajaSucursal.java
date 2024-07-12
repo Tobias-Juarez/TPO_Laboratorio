@@ -25,6 +25,7 @@ public class FrmBajaSucursal extends JDialog{
 
   private void asociarEventos(SistemaDeGestion sistemaDeGestion, TableSucursal tableModel) {
     darDeBajaButton.addActionListener(e -> {
+      sistemaDeGestion.setPeticiones();
       String idInput = txtIdSucursal.getText();
       try {
         int id=Integer.parseInt(idInput);
@@ -32,7 +33,9 @@ public class FrmBajaSucursal extends JDialog{
           JOptionPane.showMessageDialog(this, "Debe ingresar un ID de sucursal", "Error", JOptionPane.ERROR_MESSAGE);
         }else if (!sistemaDeGestion.existeSucursal(id)) {
           JOptionPane.showMessageDialog(this, "No existe una sucursal con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
-        }else {
+        } else if ( sistemaDeGestion.tienePeticionesFinalizadas(id)) {
+            JOptionPane.showMessageDialog(this, "No se puede eliminar una sucursal con peticiones con resultados finalizadas", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
           sistemaDeGestion.bajaSucursal(id);
           tableModel.remove(id);
           JOptionPane.showMessageDialog(this, "Sucursal eliminada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);

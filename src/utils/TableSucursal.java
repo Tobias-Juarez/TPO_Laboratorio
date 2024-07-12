@@ -5,13 +5,14 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.Paciente;
 import model.Sucursal;
+import model.Usuario;
 
 public class TableSucursal extends AbstractTableModel {
   private List<Sucursal> listaSucursales = new ArrayList<Sucursal>();
   protected String[] columnNames = new String[]{
-      "ID", "Dirección", "Numero", "Peticiones con resultados finalizados"};
+      "ID", "Dirección", "Numero", "Responsable Técnico"};
   protected Class[] columnClasses = new Class[]{
-      Integer.class, String.class, String.class, String.class, String.class, Integer.class};
+      Integer.class, String.class, String.class, String.class};
 
   @Override
   public String getColumnName(int column) {return columnNames[column];}
@@ -33,12 +34,12 @@ public class TableSucursal extends AbstractTableModel {
       case 0 -> listaSucursales.get(rowIndex).getId();
       case 1 -> listaSucursales.get(rowIndex).getDireccion();
       case 2 -> listaSucursales.get(rowIndex).getNumero();
-      case 3 -> listaSucursales.get(rowIndex).isPeticionResultadosFinalizados();
+      case 3 -> listaSucursales.get(rowIndex).getResponsableTecnico().getUsuario();
       default -> null;
     };
   }
-  public void add(int id, String direccion, int numero, boolean peticionesResultadosFinalizados) {
-    Sucursal s = new Sucursal(id, direccion, numero, peticionesResultadosFinalizados);
+  public void add(int id, String direccion, int numero, Usuario responsableTecnico) {
+    Sucursal s = new Sucursal(id, direccion, numero, responsableTecnico);
     listaSucursales.add(s);
     fireTableDataChanged();
   }

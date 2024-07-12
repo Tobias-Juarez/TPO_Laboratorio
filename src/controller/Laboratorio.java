@@ -18,7 +18,7 @@ public class Laboratorio {
         this.practicas = getPracticas();
         this.resultados = new ArrayList<>();
         this.muestras = new ArrayList<>();
-
+        this.atencionAlPublico = AtencionAlPublico.getInstance();
     }
     public static Laboratorio getInstance() {
         if (instance == null) {
@@ -110,6 +110,13 @@ public class Laboratorio {
         }
         return null;
     }
-
+    public boolean existePeticionEnPractica(String codigo) {
+        for (Peticion p : AtencionAlPublico.getInstance().getPeticionesDePacientes()){
+            if (p.getPractica().getCodigo().equals(codigo)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

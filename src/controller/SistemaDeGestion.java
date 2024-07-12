@@ -3,9 +3,7 @@ package controller;
 import DAO.PacientesDAO;
 import DAO.SucursalesDAO;
 import DAO.UsuariosDAO;
-import model.Paciente;
-import model.Sucursal;
-import model.Usuario;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -14,12 +12,8 @@ public class SistemaDeGestion {
     private ArrayList<Usuario> usuarios;
     private UsuariosDAO usuariosDAO;
     private SucursalesDAO sucursalesDAO;
-
-    public void setSucursales(ArrayList<Sucursal> sucursales) {
-        this.sucursales = sucursales;
-    }
-
     private ArrayList<Sucursal> sucursales;
+    private AtencionAlPublico atencionAlPublico;
     private SistemaDeGestion() throws Exception {
         this.usuariosDAO = new UsuariosDAO();
         this.sucursalesDAO = new SucursalesDAO();
@@ -44,16 +38,44 @@ public class SistemaDeGestion {
             throw new RuntimeException(e);
         }
     }
-    public void altaSucursal(int id, String direccion, int numero, boolean peticionesResultadosFinalizados) {
-        Sucursal sucursal= new Sucursal(id, direccion, numero, peticionesResultadosFinalizados);
-        this.sucursales.add(sucursal);
+    public void guardarSucursales() {
         try {
             this.sucursalesDAO.saveAll(this.sucursales);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
+    public void setPeticiones(){
+        ArrayList<Peticion> peticiones= AtencionAlPublico.getInstance().getPeticionesDePacientes();
+        for (Sucursal s : sucursales) {
+            for (Peticion p : peticiones) {
+                if (p.getSucursal().getId() == s.getId()) {
+                    if (s.getPeticiones().stream().anyMatch(peticion -> peticion.getId() == p.getId())) {
+                        s.getPeticiones().removeIf(peticion -> peticion.getId() == p.getId());
+                        s.getPeticiones().add(p);
+                    }else {
+                        s.getPeticiones().add(p);
+                    }
+                }
+            }
+        }
+    }
+    public boolean tienePeticionesFinalizadas(int id) {
+        for (Sucursal s : sucursales) {
+            if (s.getId() == id) {
+                return s.tienePeticionesConResultados();
+            }
+        }
+        return false;
+    }
+    public void altaSucursal(int id, String direccion, int numero, Usuario responsableTecnico) {
+        Sucursal sucursal= new Sucursal(id, direccion, numero, responsableTecnico);
+        this.sucursales.add(sucursal);
+        this.guardarSucursales();
+    }
+    public void setSucursales(ArrayList<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
 
     public ArrayList<Usuario> getUsuarios() {
         try {
@@ -131,13 +153,10 @@ public class SistemaDeGestion {
         for (int i = 0; i < sucursales.size(); i++) {
             if (sucursales.get(i).getId() == id) {
                 sucursales.remove(i);
-                try {
-                    this.sucursalesDAO.saveAll(this.sucursales);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                this.guardarSucursales();
                 return;
             }
         }
     }
+
 }
