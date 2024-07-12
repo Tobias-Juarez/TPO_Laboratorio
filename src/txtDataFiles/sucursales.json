@@ -1,1 +1,1 @@
-[{"id":1,"direccion":"Calle Falsa","numero":123,"peticiones":[]},{"id":11,"direccion":"Calle Falsa","numero":234,"peticiones":[]},{"id":3,"direccion":"Lionel Messi","numero":890,"peticiones":[]},{"id":5,"direccion":"Garay","numero":112,"peticiones":[]}]
+[{"id":1,"direccion":"Calle falsa","numero":123,"responsableTecnico":{"nombre":"ADMINISTRADOR","email":"ejemplo@ejemplo.com","usuario":"admin","password":"a","domicilio":"Av Triunvirato 123","dni":1,"fechaNacimiento":"01-01-1900","rol":"ADMINISTRADOR"},"peticiones":[]}]

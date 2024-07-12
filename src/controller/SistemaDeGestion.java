@@ -68,8 +68,8 @@ public class SistemaDeGestion {
         }
         return false;
     }
-    public void altaSucursal(int id, String direccion, int numero) {
-        Sucursal sucursal= new Sucursal(id, direccion, numero);
+    public void altaSucursal(int id, String direccion, int numero, Usuario responsableTecnico) {
+        Sucursal sucursal= new Sucursal(id, direccion, numero, responsableTecnico);
         this.sucursales.add(sucursal);
         this.guardarSucursales();
     }

@@ -2,8 +2,10 @@ package vista.menu.sucursales;
 
 import controller.SistemaDeGestion;
 import java.awt.Window;
+import java.util.ArrayList;
 import javax.swing.*;
 import model.Sucursal;
+import model.Usuario;
 import utils.TableSucursal;
 
 public class FrmModificarSucursal extends JDialog {
@@ -17,10 +19,17 @@ public class FrmModificarSucursal extends JDialog {
     private JLabel lblNumero;
     private JTextField txtNumero;
     private JButton modificarSucursalButton;
+  private JComboBox cbResponsableTecnico;
 
-    public FrmModificarSucursal(Window owner, String titulo, SistemaDeGestion sistemaDeGestion,
+  public FrmModificarSucursal(Window owner, String titulo, SistemaDeGestion sistemaDeGestion,
         TableSucursal tableModel) {
     super(owner, titulo);
+    DefaultComboBoxModel model = new DefaultComboBoxModel();
+    ArrayList<Usuario> listaUsuarios = sistemaDeGestion.getUsuarios();
+    for (Usuario u : listaUsuarios) {
+      model.addElement(u.getUsuario());
+    }
+    cbResponsableTecnico.setModel(model);
     setContentPane(pnlPrincipal);
     setModal(true);
     setSize(500, 400);
@@ -34,6 +43,8 @@ public class FrmModificarSucursal extends JDialog {
       String idInput = txtIdSucursal.getText();
       String direccion = txtDireccion.getText();
       String numeroInput = txtNumero.getText();
+      String responsableTecnicoInput = (String) cbResponsableTecnico.getSelectedItem();
+      Usuario responsableTecnico = sistemaDeGestion.buscarUsuario(responsableTecnicoInput);
       try {
         int id=Integer.parseInt(idInput);
         int numero=Integer.parseInt(numeroInput);
@@ -42,11 +53,10 @@ public class FrmModificarSucursal extends JDialog {
         } else if (!sistemaDeGestion.existeSucursal(id)) {
           JOptionPane.showMessageDialog(this, "No existe una Sucursal con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
         }else {
-          Sucursal s = sistemaDeGestion.buscarSucursal(id);
           tableModel.remove(id);
           sistemaDeGestion.bajaSucursal(id);
-          sistemaDeGestion.altaSucursal(id, direccion, numero);
-          tableModel.add(id, direccion, numero);
+          sistemaDeGestion.altaSucursal(id, direccion, numero, responsableTecnico);
+          tableModel.add(id, direccion, numero, responsableTecnico);
 
           JOptionPane.showMessageDialog(this, "Sucursal modificada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           dispose();

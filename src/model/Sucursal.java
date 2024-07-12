@@ -6,13 +6,23 @@ public class Sucursal {
     private int id;
     private String direccion;
     private int numero;
+    private Usuario responsableTecnico;
     ArrayList<Peticion> peticiones;
 
-    public Sucursal(int id, String direccion, int numero) {
+    public Sucursal(int id, String direccion, int numero, Usuario responsableTecnico) {
         this.id = id;
         this.direccion = direccion;
         this.numero = numero;
+        this.responsableTecnico = responsableTecnico;
         this.peticiones = new ArrayList<>();
+    }
+
+    public Usuario getResponsableTecnico() {
+        return responsableTecnico;
+    }
+
+    public void setResponsableTecnico(Usuario responsableTecnico) {
+        this.responsableTecnico = responsableTecnico;
     }
 
     public ArrayList<Peticion> getPeticiones() {

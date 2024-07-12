@@ -28,9 +28,10 @@ public class FrmSucursales extends JDialog {
 
     for (int i = 0; i < sistemaDeGestion.getSucursales().size(); i++) {
       tableModel.add(
-          sistemaDeGestion.getSucursales().get(i).getId(),
-          sistemaDeGestion.getSucursales().get(i).getDireccion(),
-          sistemaDeGestion.getSucursales().get(i).getNumero()
+            sistemaDeGestion.getSucursales().get(i).getId(),
+            sistemaDeGestion.getSucursales().get(i).getDireccion(),
+            sistemaDeGestion.getSucursales().get(i).getNumero(),
+            sistemaDeGestion.getSucursales().get(i).getResponsableTecnico()
       );
     }
     setContentPane(pnlPrincipal);
