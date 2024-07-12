@@ -3,6 +3,7 @@ package utils;
 
 import model.Peticion;
 import model.Practica;
+import model.Sucursal;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.List;
 public class TablePeticion extends AbstractTableModel {
     private List<Peticion> listaPeticiones = new ArrayList<Peticion>();
     protected String[] columnNames = new String[]{
-            "ID de Petición", "Obra Social", "Fecha de carga", "Fecha de entrega", "Estado", "Practica"};
+            "ID de Petición", "Obra Social", "Fecha de carga", "Fecha de entrega", "Estado", "Practica", "Sucursal"};
     protected Class[] columnClasses = new Class[]{
-            Integer.class, String.class, String.class, String.class, String.class, String.class};
+            Integer.class, String.class, String.class, String.class, String.class, String.class, String.class};
 
     @Override
     public String getColumnName(int column) {return columnNames[column];}
@@ -38,11 +39,13 @@ public class TablePeticion extends AbstractTableModel {
             case 3 -> listaPeticiones.get(rowIndex).getFechaEntrega();
             case 4 -> listaPeticiones.get(rowIndex).getEstado();
             case 5 -> listaPeticiones.get(rowIndex).getPractica().getNombre();
+            case 6 -> listaPeticiones.get(rowIndex).getSucursal().getId();
             default -> null;
         };
     }
-    public void add(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
-        Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+    public void add(int id, String obraSocial, String fechaCarga, String fechaEntrega,String estado, Practica practica, Sucursal sucursal) {
+        Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
+        p.setEstado(estado);
         listaPeticiones.add(p);
         fireTableDataChanged();
     }

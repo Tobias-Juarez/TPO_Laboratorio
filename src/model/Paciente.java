@@ -24,18 +24,18 @@ public class Paciente {
         return peticiones;
     }
 
-    public void altaPeticion( int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
-        Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+    public void altaPeticion( int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
+        Peticion p = new Peticion(id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
         this.peticiones.add(p);
     }
-    public void modificarPeticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, String estado, Practica practica) {
+    public void modificarPeticion(int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
         for (Peticion p : peticiones) {
             if (p.getId() == id) {
                 p.setObraSocial(obraSocial);
                 p.setFechaCarga(fechaCarga);
                 p.setFechaEntrega(fechaEntrega);
-                p.setEstado();
                 p.setPractica(practica);
+                p.setSucursal(sucursal);
                 return;
             }
         }

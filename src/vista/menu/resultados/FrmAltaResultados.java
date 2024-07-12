@@ -75,7 +75,6 @@ public class FrmAltaResultados extends JDialog{
           } else {
             Practica practica = atencionAlPublico.getPracticaDePeticion(idPeticion);
             atencionAlPublico.agregarResultado(id, practica, idPeticion, listaValores);
-            atencionAlPublico.definirEstadoPeticion(idPeticion);
             tableModel.add(id, practica.getNombre(), idPeticion, listaValores);
             JOptionPane.showMessageDialog(FrmAltaResultados.this, "Resultado creado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dispose();

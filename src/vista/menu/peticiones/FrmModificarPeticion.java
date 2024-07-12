@@ -2,8 +2,10 @@ package vista.menu.peticiones;
 
 import controller.AtencionAlPublico;
 import controller.Laboratorio;
+import controller.SistemaDeGestion;
 import model.Paciente;
 import model.Practica;
+import model.Sucursal;
 import utils.TablePeticion;
 
 import java.awt.Window;
@@ -27,8 +29,9 @@ public class FrmModificarPeticion extends JDialog {
   private JTextField txtEstado;
   private JButton ModificarPeticionButton;
   private JComboBox cbPracticas;
+    private JComboBox cbSucursal;
 
-  public FrmModificarPeticion(Window owner, String titulo, int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio) {
+    public FrmModificarPeticion(Window owner, String titulo, int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     super(owner, titulo);
     DefaultComboBoxModel model = new DefaultComboBoxModel();
     ArrayList<String> listaPracticas = new ArrayList<String>();
@@ -37,16 +40,22 @@ public class FrmModificarPeticion extends JDialog {
     }
     model.addAll(listaPracticas);
     cbPracticas.setModel(model);
+    DefaultComboBoxModel modelSucursal = new DefaultComboBoxModel();
+    ArrayList<Sucursal> listaSucursales = sistemaDeGestion.getSucursales();
+    for ( Sucursal s : listaSucursales) {
+      modelSucursal.addElement(s.getId());
+    }
+    cbSucursal.setModel(modelSucursal);
     setContentPane(pnlPrincipal);
     setModal(true);
     setSize(500, 400);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
-    asociarEventos(dni, tableModel, atencionAlPublico, laboratorio);
+    asociarEventos(dni, tableModel, atencionAlPublico, laboratorio, sistemaDeGestion);
 
   }
 
-  private void asociarEventos(int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio) {
+  private void asociarEventos(int dni, TablePeticion tableModel, AtencionAlPublico atencionAlPublico, Laboratorio laboratorio, SistemaDeGestion sistemaDeGestion) {
     ModificarPeticionButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -54,23 +63,23 @@ public class FrmModificarPeticion extends JDialog {
         String obraSocial = txtObraSocial.getText();
         String fechaCarga = txtFechaCarga.getText();
         String fechaEntrega = txtFechaEntrega.getText();
-        String estado = txtEstado.getText();
         String practicaInput = (String) cbPracticas.getSelectedItem();
         Practica practica = laboratorio.buscarPracticaPorNombre(practicaInput);
+        Sucursal sucursal = sistemaDeGestion.buscarSucursal((int) cbSucursal.getSelectedItem());
 
         try {
           int id = Integer.parseInt(idInput);
           Paciente p = atencionAlPublico.buscarPaciente(dni);
-          if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || estado.isEmpty() || (practicaInput != null && practicaInput.isEmpty())) {
+          if (idInput.isEmpty() || obraSocial.isEmpty() || fechaCarga.isEmpty() || fechaEntrega.isEmpty() || (practicaInput != null && practicaInput.isEmpty()) || sucursal == null) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return;
           } else if (p == null) {
             JOptionPane.showMessageDialog(null, "No existe un paciente con ese DNI", "Error", JOptionPane.ERROR_MESSAGE);
             return;
           } else {
-            atencionAlPublico.modificarPeticion(dni, id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+            atencionAlPublico.modificarPeticion(dni, id, obraSocial, fechaCarga, fechaEntrega, practica, sucursal);
             tableModel.remove(id);
-            tableModel.add(id, obraSocial, fechaCarga, fechaEntrega, estado, practica);
+            tableModel.add(id, obraSocial, fechaCarga, fechaEntrega,"", practica, sucursal);
             dispose();
           }
         } catch (NumberFormatException ex) {

@@ -78,7 +78,7 @@ public class FrmMenu extends JDialog {
         peticionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmPeticiones frame = new FrmPeticiones(self, "Peticiones", rol, atencionAlPublico, laboratorio);
+                FrmPeticiones frame = new FrmPeticiones(self, "Peticiones", rol, atencionAlPublico, laboratorio, sistemaDeGestion);
                 frame.setVisible(true);
 
             }
