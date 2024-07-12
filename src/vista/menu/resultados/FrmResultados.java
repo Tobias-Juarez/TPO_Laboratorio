@@ -15,8 +15,6 @@ public class FrmResultados extends JDialog {
   private JButton crearResultadoButton;
   private JButton modificarResultadoButton;
   private JButton eliminarResultadoButton;
-  private JButton consultarResultadosButton;
-  private JButton cargarMuestraButton;
   private JTable tableResultados;
   private TableResultado tableModel;
   private FrmResultados self;
@@ -52,7 +50,6 @@ public class FrmResultados extends JDialog {
       crearResultadoButton.setEnabled(false);
       modificarResultadoButton.setEnabled(false);
       eliminarResultadoButton.setEnabled(false);
-      cargarMuestraButton.setEnabled(false);
     }
     crearResultadoButton.addActionListener(new ActionListener() {
 
@@ -77,14 +74,7 @@ public class FrmResultados extends JDialog {
         frame.setVisible(true);
       }
     });
-    cargarMuestraButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        FrmCargarMuestra frame = new FrmCargarMuestra(self,"Cargar Muestra");
-        frame.setVisible(true);
 
-      }
-    });
 
   }
 

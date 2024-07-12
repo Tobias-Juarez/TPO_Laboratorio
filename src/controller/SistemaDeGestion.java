@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class SistemaDeGestion {
     private static SistemaDeGestion instance;
-    private ArrayList<Usuario> usuarios;
-    private UsuariosDAO usuariosDAO;
-    private SucursalesDAO sucursalesDAO;
+    private final ArrayList<Usuario> usuarios;
+    private final UsuariosDAO usuariosDAO;
+    private final SucursalesDAO sucursalesDAO;
     private ArrayList<Sucursal> sucursales;
-    private AtencionAlPublico atencionAlPublico;
+
     private SistemaDeGestion() throws Exception {
         this.usuariosDAO = new UsuariosDAO();
         this.sucursalesDAO = new SucursalesDAO();
@@ -29,12 +29,23 @@ public class SistemaDeGestion {
         }
         return instance;
     }
-    public void altaUsuario(Usuario usuario) {
-        this.usuarios.add(usuario);
+    public void guardarUsuarios() {
         try {
             this.usuariosDAO.saveAll(this.usuarios);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+    public void altaUsuario(Usuario usuario) {
+        this.usuarios.add(usuario);
+        this.guardarUsuarios();
+    }
+    public void bajaUsuario(String usuario) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getUsuario().equals(usuario)) {
+                usuarios.remove(i);
+                this.guardarUsuarios();
+            }
         }
     }
     public void guardarSucursales() {
@@ -71,6 +82,15 @@ public class SistemaDeGestion {
         this.sucursales.add(sucursal);
         this.guardarSucursales();
     }
+    public void bajaSucursal(int id) {
+        for (int i = 0; i < sucursales.size(); i++) {
+            if (sucursales.get(i).getId() == id) {
+                sucursales.remove(i);
+                this.guardarSucursales();
+                return;
+            }
+        }
+    }
     public void setSucursales(ArrayList<Sucursal> sucursales) {
         this.sucursales = sucursales;
     }
@@ -83,13 +103,6 @@ public class SistemaDeGestion {
         }
     }
 
-    @Override
-    public String toString() {
-        return "SistemaDeGestion{" +
-            "usuarios=" + usuarios +
-            ", sucursales=" + sucursales +
-            '}';
-    }
     public boolean existeUsuario(String usuario) {
         for (Usuario u : usuarios) {
             if (u.getUsuario().equals(usuario)) {
@@ -107,21 +120,6 @@ public class SistemaDeGestion {
         }
         return null;
     }
-
-    public void bajaUsuario(String usuario) {
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getUsuario().equals(usuario)) {
-                usuarios.remove(i);
-                try {
-                    this.usuariosDAO.saveAll(this.usuarios);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                return;
-            }
-        }
-    }
-
   public boolean existeSucursal(int id) {
       for (Sucursal s : sucursales) {
           if (s.getId()== id) {
@@ -147,14 +145,6 @@ public class SistemaDeGestion {
         }
     }
 
-    public void bajaSucursal(int id) {
-        for (int i = 0; i < sucursales.size(); i++) {
-            if (sucursales.get(i).getId() == id) {
-                sucursales.remove(i);
-                this.guardarSucursales();
-                return;
-            }
-        }
-    }
+
 
 }

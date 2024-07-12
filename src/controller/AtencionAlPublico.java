@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class AtencionAlPublico {
     private static AtencionAlPublico instance;
-    private ArrayList<Paciente> pacientes;
-    private ArrayList<Peticion> peticiones;
-    private ArrayList<Resultado> resultados;
-    private PacientesDAO pacientesDAO;
+    private final ArrayList<Paciente> pacientes;
+    private final ArrayList<Peticion> peticiones;
+    private final ArrayList<Resultado> resultados;
+    private final PacientesDAO pacientesDAO;
     private AtencionAlPublico() throws Exception {
         this.pacientesDAO = new PacientesDAO();
         this.pacientes = getPacientes();
@@ -26,6 +26,13 @@ public class AtencionAlPublico {
             }
         }
         return instance;
+    }
+    public void guardarPacientes() {
+        try {
+            this.pacientesDAO.saveAll(this.pacientes);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void altaPaciente(int dni, String nombre, String domicilio, String mail, String sexo, int edad) {
@@ -45,15 +52,35 @@ public class AtencionAlPublico {
             }
         }
     }
-
-
-    public void guardarPacientes() {
+    public void bajaPaciente(int dni) {
+        for (int i = 0; i < pacientes.size(); i++) {
+            if (pacientes.get(i).getDni() == dni) {
+                pacientes.remove(i);
+                this.guardarPacientes();
+                return;
+            }
+        }
+    }
+    public ArrayList<Paciente> getPacientes() {
         try {
-            this.pacientesDAO.saveAll(this.pacientes);
+            return this.pacientesDAO.getAll();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+    public boolean existePaciente(int dni) {
+        return this.pacientes.stream().anyMatch(paciente -> paciente.getDni() == dni);
+    }
+    public Paciente buscarPaciente(int dni) {
+        for (Paciente p : pacientes) {
+            if (p.getDni()==dni) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+
     public void altaPeticion(int dni,int id, String obraSocial, String fechaCarga, String fechaEntrega, Practica practica, Sucursal sucursal) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {
@@ -81,44 +108,7 @@ public class AtencionAlPublico {
             }
         }
     }
-    public Paciente buscarPaciente(int dni) {
-        for (Paciente p : pacientes) {
-            if (p.getDni()==dni) {
-                return p;
-            }
-        }
-        return null;
-    }
 
-
-    public void listarPeticionesConValoresCriticos() {
-        //TODO
-    }
-    public void consultarResultados(Peticion peticionId) {
-        //TODO
-    }
-
-    public ArrayList<Paciente> getPacientes() {
-        try {
-            return this.pacientesDAO.getAll();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public boolean existePaciente(int dni) {
-        return this.pacientes.stream().anyMatch(paciente -> paciente.getDni() == dni);
-    }
-
-    public void bajaPaciente(int dni) {
-        for (int i = 0; i < pacientes.size(); i++) {
-            if (pacientes.get(i).getDni() == dni) {
-                pacientes.remove(i);
-                this.guardarPacientes();
-                return;
-            }
-        }
-    }
     public ArrayList<Peticion> getPeticionesDePacientes() {
         this.peticiones.clear();
         for (Paciente p : pacientes) {
@@ -163,6 +153,9 @@ public class AtencionAlPublico {
             }
         }
     }
+    public ArrayList<Resultado> getResultados() {
+        return resultados;
+    }
 
     public void setResultadosDePeticion() {
         this.resultados.clear();
@@ -174,11 +167,6 @@ public class AtencionAlPublico {
             }
         }
     }
-
-    public ArrayList<Resultado> getResultados() {
-        return resultados;
-    }
-
     public boolean tienePeticionesFinalizadas(int dni) {
         for (Paciente p : pacientes) {
             if (p.getDni() == dni) {

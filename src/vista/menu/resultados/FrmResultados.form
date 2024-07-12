@@ -47,14 +47,6 @@
           <text value="Crear Resultado"/>
         </properties>
       </component>
-      <component id="cb12a" class="javax.swing.JButton" binding="cargarMuestraButton" default-binding="true">
-        <constraints>
-          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Cargar Muestra"/>
-        </properties>
-      </component>
       <scrollpane id="e31c7">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="8" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
